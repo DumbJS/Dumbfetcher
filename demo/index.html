@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8"/>
+  <title>Validator JS demo</title>
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/spectre.css/dist/spectre.min.css"
+  />
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css"
+  />
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css"
+  />
+</head>
+<body>
+<div
+  class="container p-centered"
+  style="width: 800px; text-align: center;"
+>
+  <div class="columns">
+    <div class="column col-12">
+      <div class="py-2">
+        <div class="h1">Dumbfetcher demo</div>
+      </div>
+    </div>
+  </div>
+  <div class="columns">
+    All the stuff is in console.
+  </div>
+</div>
+<template id="vjs-error-template">
+  <div>
+    <div style="margin-top: 6px;" class="label label-error" data-vjs-error-message></div>
+  </div>
+</template>
+<script type="module">
+  import {Dumbfetcher, DumbfetcherHooks} from "../dist/index.js";
+
+  const placeholderAPI = new Dumbfetcher('https://jsonplaceholder.typicode.com', {
+    requestOptions: {
+      additional: {
+        skipNoop: true
+      },
+      headers: {
+        'content-type': 'application/json'
+      }
+    },
+    debug: true
+  })
+
+  //?Hooks
+  placeholderAPI.hooks.add(DumbfetcherHooks.beforeFetch, 'noop', (options) => {
+    if (options?.additional?.skipNoop) {
+      console.log('skipped')
+      return options
+    }
+    console.log('not skipped')
+    return options
+  })
+
+  placeholderAPI.hooks.add(DumbfetcherHooks.afterFetchSuccess, 'extractAsJSONAndLog', async (options, response) => {
+    console.log(options, response)
+    const extracted = await response.json()
+    console.log(extracted)
+    return response
+  })
+
+  //? Call
+  placeholderAPI.fetch('todos')
+  placeholderAPI.fetch('todos', {
+    additional: {
+      skipNoop: false
+    }
+  })
+</script>
+</body>
+</html>
