@@ -6,7 +6,6 @@
     "module": "es2015",
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
-    "declaration": false,
     "sourceMap": true
   },
   "include": [
