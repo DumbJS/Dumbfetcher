@@ -43,6 +43,7 @@ export const Dumbfetcher = function (baseURL: string, defaultOptions: Partial<Du
           query[key] = value
         }
       }
+
       fetchUrl.search = new URLSearchParams(query).toString();
 
       return fetch(fetchUrl.toString(), {

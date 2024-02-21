@@ -54,7 +54,7 @@
 
   //?Hooks
   placeholderAPI.hooks.add(DumbfetcherHooks.beforeFetch, 'noop', (options) => {
-    if (options?.additional?.skipNoop) {
+    if (options?.skipNoop) {
       console.log('skipped')
       return options
     }
@@ -72,9 +72,7 @@
   //? Call
   placeholderAPI.fetch('todos')
   placeholderAPI.fetch('todos', {
-    additional: {
       skipNoop: false
-    }
   })
 </script>
 </body>
