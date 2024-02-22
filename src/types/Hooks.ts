@@ -2,7 +2,7 @@ import type {requestOptions} from "./DumbfetcherOptions";
 
 export type FetchHookFunction = BeforeFetchHookFunction & AfterFetchHookFunction
 export type BeforeFetchHookFunction = (options: requestOptions) => requestOptions
-export type AfterFetchHookFunction = (options: requestOptions) => Response
+export type AfterFetchHookFunction = (options: requestOptions, response: Response) => Response
 
 export type Hooks = {
     beforeFetch: Map<string, BeforeFetchHookFunction>,
