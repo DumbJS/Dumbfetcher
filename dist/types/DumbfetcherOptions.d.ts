@@ -1,10 +1,7 @@
-export type requestOptions = {
+export type RequestOptions = RequestInit & {
     query: object;
-    headers: HeadersInit;
-    method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'OPTIONS' | 'DELETE';
-    body: BodyInit;
 };
 export type DumbfetcherOptions = {
-    requestOptions: Partial<requestOptions>;
+    requestOptions: Partial<RequestOptions>;
     debug: boolean;
 };

@@ -42,11 +42,7 @@ export const Dumbfetcher = function (baseURL, defaultOptions) {
                     }
                 }
                 fetchUrl.search = new URLSearchParams(query).toString();
-                return fetch(fetchUrl.toString(), {
-                    headers: new Headers(requestOptions.headers),
-                    method: requestOptions.method,
-                    body: requestOptions.body
-                }).then(function (response) {
+                return fetch(fetchUrl.toString(), Object.assign({ headers: new Headers(requestOptions.headers) }, requestOptions)).then(function (response) {
                     return __awaiter(this, void 0, void 0, function* () {
                         return new Promise(function (resolve, reject) {
                             return __awaiter(this, void 0, void 0, function* () {
