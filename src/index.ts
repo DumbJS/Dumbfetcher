@@ -1,4 +1,4 @@
-import type {DumbfetcherOptions, requestOptions} from "./types/DumbfetcherOptions";
+import type {DumbfetcherOptions, RequestOptions} from "./types/DumbfetcherOptions";
 import type {
   Hooks,
   FetchHookFunction
@@ -20,7 +20,7 @@ export const Dumbfetcher = function (baseURL: string, defaultOptions: Partial<Du
   }
 
   return {
-    fetch: async function (url: string, requestOptions: Partial<requestOptions>) {
+    fetch: async function (url: string, requestOptions: Partial<RequestOptions>) {
       requestOptions = Object.assign({}, defaultOptions.requestOptions, requestOptions);
 
       //? beforeFetch hook
@@ -48,8 +48,7 @@ export const Dumbfetcher = function (baseURL: string, defaultOptions: Partial<Du
 
       return fetch(fetchUrl.toString(), {
         headers: new Headers(requestOptions.headers),
-        method: requestOptions.method,
-        body: requestOptions.body
+        ...requestOptions
       }).then(
         async function (response) {
           return new Promise(async function (resolve, reject) {
