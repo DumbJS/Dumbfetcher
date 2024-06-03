@@ -37,7 +37,7 @@ export const Dumbfetcher = function (baseURL, defaultOptions) {
                 for (const key in requestOptions.query) {
                     //Removes URLQuery with null values
                     const value = requestOptions.query[key];
-                    if (value) {
+                    if (typeof value === "boolean" || value) {
                         query[key] = value;
                     }
                 }
@@ -53,6 +53,9 @@ export const Dumbfetcher = function (baseURL, defaultOptions) {
                                             console.debug(`1️⃣ afterFetchError: ${name} hook called`);
                                         }
                                         response = yield fn.call(null, requestOptions, response);
+                                    }
+                                    if (response.ok) {
+                                        return resolve(resolve);
                                     }
                                     return reject(response);
                                 }
