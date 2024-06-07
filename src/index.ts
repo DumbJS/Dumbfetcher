@@ -62,7 +62,7 @@ export const Dumbfetcher = function (baseURL: string, defaultOptions: Partial<Du
 
               }
               if(response.ok){
-                  return resolve(resolve);
+                  return resolve(response);
               }
 
               return reject(response);

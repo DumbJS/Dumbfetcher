@@ -1,5 +1,6 @@
 export type RequestOptions = RequestInit & {
-    query: object
+    query: object,
+    extra: object
 }
 
 export type DumbfetcherOptions = {
