@@ -34,14 +34,21 @@ export const Dumbfetcher = function (baseURL, defaultOptions) {
                 let fetchUrl = new URL(url, baseURL);
                 // *URL SearchParams construction
                 const query = {};
+                const urlSearchParams = new URLSearchParams(query);
                 for (const key in requestOptions.query) {
-                    //Removes URLQuery with null values
                     const value = requestOptions.query[key];
+                    //Structure array parameters
+                    if (Array.isArray(value)) {
+                        let uspKey = key.endsWith("[]") ? key : key + '[]';
+                        value.forEach(item => urlSearchParams.append(uspKey, item));
+                        continue;
+                    }
+                    //Removes URLQuery with null values
                     if (typeof value === "boolean" || value) {
-                        query[key] = value;
+                        urlSearchParams.append(key, value);
                     }
                 }
-                fetchUrl.search = new URLSearchParams(query).toString();
+                fetchUrl.search = urlSearchParams.toString();
                 return fetch(fetchUrl.toString(), Object.assign({ headers: new Headers(requestOptions.headers) }, requestOptions)).then(function (response) {
                     return __awaiter(this, void 0, void 0, function* () {
                         return new Promise(function (resolve, reject) {
@@ -55,7 +62,7 @@ export const Dumbfetcher = function (baseURL, defaultOptions) {
                                         response = yield fn.call(null, requestOptions, response);
                                     }
                                     if (response.ok) {
-                                        return resolve(resolve);
+                                        return resolve(response);
                                     }
                                     return reject(response);
                                 }
